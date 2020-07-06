@@ -14,19 +14,29 @@ namespace Round_Button
 {
     public partial class CustomButton : UserControl
     {
+        //Button Back Color
         private Color _defaultBackColor = Color.White;
         private Color _onHoverBackColor = Color.FromArgb(230, 230, 230);
         private Color _onClickBackColor = Color.FromArgb(200, 200, 200);
 
+        //Button Fore Color
         private Color _defaultForeColor = Color.Black;
         private Color _onHoverForeColor = Color.Black;
         private Color _onClickForeColor = Color.Black;
 
+        //Button Text Size
         private int _textSize;
+
+        //Button Text
         private string _buttonText = "Button";
+
+        //The font 
         private Font _buttonFont = new Font("Century Gothic", 10);
+
+        //Corner Radius of the button
         private float _corenerRadius = 10;
 
+        //update the button state
         bool isHovering = false;
         bool isClicked = false;
 
@@ -157,28 +167,38 @@ namespace Round_Button
             InitializeComponent();
         }
 
+        //This method is to draw the button according to the button state
         protected override void OnPaint(PaintEventArgs e)
         {
+            //Initialize Graphics
             Graphics graphics = e.Graphics;
+
+            //Set the Smoothing bood so we can get a High Quality Curves.
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             //Area for the Button Text
             Rectangle rectangle = new Rectangle(5, 5, this.Width - 15, this.Height - 15);
 
-            //The text 
+            //Center align The text 
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
+
+
+            //Check Whether the mouse if hovering the button
             if (isHovering)
             {
+                //If it clickes, this code will run
                 if(isClicked)
                 {
                     //Base Round Rectangle (Our Button)
+                    //this FillRoundedRectangle method is from the GraphicsExtention Class. 
                     graphics.FillRoundedRectangle(
       /*Brush*/         new SolidBrush(_onClickBackColor),
       /*X, y*/          5, 5,
       /*Width, Height*/ this.Width - 15, this.Height - 15,
       /*Corner Radius*/ _corenerRadius);
+
 
                     graphics.DrawString(_buttonText, _buttonFont, new SolidBrush(_onClickForeColor), rectangle, stringFormat);
                 }
@@ -200,6 +220,7 @@ namespace Round_Button
         private void CustomButton_MouseEnter(object sender, EventArgs e)
         {
             isHovering = true;
+            //Validate the form
             this.Invalidate();
         }
 
